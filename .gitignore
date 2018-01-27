@@ -1,0 +1,5 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+.idea
+config-server/config-server.iml
+eureka-server/eureka-server.iml
