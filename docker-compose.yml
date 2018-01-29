@@ -1,0 +1,14 @@
+config-server:
+  image: partytime/config-server
+  environment:
+   - SPRING_PROFILES_ACTIVE=docker
+   - DOCKER_IP=$DOCKER_IP
+  ports:
+   - 9998:9998
+eureka-server:
+  image: partytime/eureka-server
+  environment:
+   - SPRING_PROFILES_ACTIVE=docker
+   - DOCKER_IP=$DOCKER_IP
+  ports:
+   - 9999:9999

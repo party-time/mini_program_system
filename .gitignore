@@ -3,3 +3,7 @@
 .idea
 config-server/config-server.iml
 eureka-server/eureka-server.iml
+.DS_Store
+config-server/target/
+eureka-server/.DS_Store
+eureka-server/target/

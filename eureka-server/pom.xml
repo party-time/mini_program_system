@@ -28,6 +28,25 @@
         </dependency>
 
     </dependencies>
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>bootstrap.properties</include>
+                        </includes>
+                        <excludes>
+                            <exclude>application.properties</exclude>
+                            <exclude>**/*</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
