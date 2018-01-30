@@ -12,3 +12,21 @@ eureka-server:
    - DOCKER_IP=$DOCKER_IP
   ports:
    - 9999:9999
+api-gateway:
+  image: partytime/api-gateway
+  environment:
+   - SPRING_PROFILES_ACTIVE=docker
+   - DOCKER_IP=$DOCKER_IP
+  extra_hosts:
+    config-server: 192.168.99.101
+  ports:
+   - 8999:8999
+user-service:
+  image: partytime/user-service
+  environment:
+   - SPRING_PROFILES_ACTIVE=docker
+   - DOCKER_IP=$DOCKER_IP
+  extra_hosts:
+    config-server: 192.168.99.101
+  ports:
+   - 8899:8899

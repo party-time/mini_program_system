@@ -37,6 +37,11 @@
     <modules>
         <module>config-server</module>
         <module>eureka-server</module>
+        <module>api-gateway</module>
+        <module>user-service</module>
+        <module>mini-program-web</module>
+        <module>party-service</module>
+        <module>mini-program-dto</module>
     </modules>
     
     <properties>

@@ -21,4 +21,4 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${security.user.name}:${security.user.password}@127.0.0.1:${server.port}/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@${DOCKER_IP:127.0.0.1}:${server.port}/eureka/

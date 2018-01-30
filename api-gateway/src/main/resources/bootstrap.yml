@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+      uri: http://config-server:9998
+
+
+
+
+security:
+  user:
+    name: liuwei
+    password: liuwei123
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@${DOCKER_IP:127.0.0.1}:9999/eureka/
