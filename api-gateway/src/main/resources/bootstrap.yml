@@ -5,15 +5,14 @@ spring:
     config:
       uri: http://config-server:9998
 
-
-
-
 security:
   user:
     name: liuwei
     password: liuwei123
 
 eureka:
+  instance:
+    hostname: api-gateway
   client:
     serviceUrl:
-      defaultZone: http://${security.user.name}:${security.user.password}@${DOCKER_IP:127.0.0.1}:9999/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@192.168.99.101:9999/eureka/

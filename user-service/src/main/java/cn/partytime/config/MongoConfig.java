@@ -5,9 +5,12 @@ import com.mongodb.reactivestreams.client.MongoClients;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration;
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 
 @Configuration
@@ -17,6 +20,7 @@ public class MongoConfig extends AbstractReactiveMongoConfiguration {
     private final Environment environment;
 
     @Override
+    @Bean
     public MongoClient reactiveMongoClient() {
         int port = environment.getProperty("mongo.port", Integer.class);
         String ip = environment.getProperty("mongo.ip", String.class);

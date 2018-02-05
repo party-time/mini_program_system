@@ -1,32 +1,65 @@
-config-server:
-  image: partytime/config-server
-  environment:
-   - SPRING_PROFILES_ACTIVE=docker
-   - DOCKER_IP=$DOCKER_IP
-  ports:
-   - 9998:9998
-eureka-server:
-  image: partytime/eureka-server
-  environment:
-   - SPRING_PROFILES_ACTIVE=docker
-   - DOCKER_IP=$DOCKER_IP
-  ports:
-   - 9999:9999
-api-gateway:
-  image: partytime/api-gateway
-  environment:
-   - SPRING_PROFILES_ACTIVE=docker
-   - DOCKER_IP=$DOCKER_IP
-  extra_hosts:
-    config-server: 192.168.99.101
-  ports:
-   - 8999:8999
-user-service:
-  image: partytime/user-service
-  environment:
-   - SPRING_PROFILES_ACTIVE=docker
-   - DOCKER_IP=$DOCKER_IP
-  extra_hosts:
-    config-server: 192.168.99.101
-  ports:
-   - 8899:8899
+version: '3'
+services:
+  config-server:
+    image: partytime/config-server
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+     - DOCKER_IP=$DOCKER_IP
+    ports:
+     - 9998:9998
+    hostname: config-server
+    depends_on:
+      - eureka-server
+    networks:
+      - ingress
+    deploy:
+      replicas: 1
+
+  eureka-server:
+    image: partytime/eureka-server
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+     - DOCKER_IP=$DOCKER_IP
+    ports:
+     - 9999:9999
+    networks:
+     - ingress
+    deploy:
+      replicas: 1
+
+  api-gateway:
+    image: partytime/api-gateway
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+     - DOCKER_IP=$DOCKER_IP
+    extra_hosts:
+      config-server: $DOCKER_IP
+      user-service: $DOCKER_IP
+    ports:
+     - 8999:8999
+    networks:
+     - ingress
+    depends_on:
+     - eureka-server
+     - config-server
+    deploy:
+      replicas: 1
+
+  user-service:
+    image: partytime/user-service
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+     - DOCKER_IP=$DOCKER_IP
+    extra_hosts:
+      config-server: $DOCKER_IP
+    ports:
+     - 8899:8899
+    networks:
+     - ingress
+    deploy:
+      replicas: 2
+
+
+networks:
+  ingress:
+    driver: overlay

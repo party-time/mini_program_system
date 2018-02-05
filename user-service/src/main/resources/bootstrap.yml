@@ -14,6 +14,9 @@ security:
     password: liuwei123
 
 eureka:
+  instance:
+    hostname: user-service
+    prefer-ip-address: true
   client:
     serviceUrl:
       defaultZone: http://${security.user.name}:${security.user.password}@${DOCKER_IP:127.0.0.1}:9999/eureka/
