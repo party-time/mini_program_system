@@ -14,6 +14,10 @@ services:
       - ingress
     deploy:
       replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
 
   eureka-server:
     image: partytime/eureka-server
