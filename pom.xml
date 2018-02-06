@@ -42,6 +42,7 @@
         <module>mini-program-web</module>
         <module>party-service</module>
         <module>mini-program-dto</module>
+        <module>testeurekaserver</module>
     </modules>
     
     <properties>

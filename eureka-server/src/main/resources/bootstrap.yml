@@ -1,8 +1,6 @@
 server:
   port: 9999
-
 spring:
-  profiles: docker
   application:
     name: eureka-server
 
@@ -18,11 +16,10 @@ security:
 eureka:
   instance:
     hostname: eureka-server
-    prefer-ip-address: true
   server:
     enable-self-preservation: false
   client:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${security.user.name}:${security.user.password}@${DOCKER_IP:127.0.0.1}:${server.port}/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@127.0.0.1:${server.port}/eureka/

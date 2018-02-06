@@ -1,0 +1,69 @@
+version: '3'
+services:
+  eureka-server:
+    image: partytime/eureka-server
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+     - DOCKER_IP=$DOCKER_IP
+    ports:
+     - 9999:9999
+    networks:
+     - ingress
+    deploy:
+      replicas: 1
+
+  config-server:
+    image: partytime/config-server
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+     - DOCKER_IP=$DOCKER_IP
+    ports:
+     - 9998:9998
+    hostname: config-server
+    depends_on:
+      - eureka-server
+    networks:
+      - ingress
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+
+
+
+  api-gateway:
+    image: partytime/api-gateway
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+     - DOCKER_IP=$DOCKER_IP
+    extra_hosts:
+      config-server: $DOCKER_IP
+      user-service: $DOCKER_IP
+    ports:
+     - 8999:8999
+    networks:
+     - ingress
+    depends_on:
+     - eureka-server
+     - config-server
+    deploy:
+      replicas: 1
+
+  user-service:
+    image: partytime/user-service
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+     - DOCKER_IP=$DOCKER_IP
+    extra_hosts:
+      config-server: $DOCKER_IP
+    ports:
+     - 8899:8899
+    networks:
+     - ingress
+    deploy:
+      replicas: 2
+    depends_on:
+       - eureka-server
+       - config-server
