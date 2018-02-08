@@ -7,6 +7,7 @@ services:
      - DOCKER_IP=$DOCKER_IP
     ports:
      - 9999:9999
+    hostname: eureka-server
     networks:
      - ingress
     deploy:
@@ -67,3 +68,6 @@ services:
     depends_on:
        - eureka-server
        - config-server
+
+networks:
+  ingress:
