@@ -1,10 +1,11 @@
 version: '3'
 services:
+  MASTER_IP: 192.168.1.25
   eureka-server:
     image: partytime/eureka-server
     environment:
      - SPRING_PROFILES_ACTIVE=docker
-     - DOCKER_IP=$DOCKER_IP
+     - MASTER_IP=$MASTER_IP
     ports:
      - 9999:9999
     hostname: eureka-server
@@ -12,12 +13,16 @@ services:
      - ingress
     deploy:
       replicas: 1
+      #指定部署的服务器标签
+      constraints:
+        - node.labels.func == master-machine
+
 
   config-server:
     image: partytime/config-server
     environment:
      - SPRING_PROFILES_ACTIVE=docker
-     - DOCKER_IP=$DOCKER_IP
+     - MASTER_IP=$MASTER_IP
     ports:
      - 9998:9998
     hostname: config-server
@@ -27,6 +32,8 @@ services:
       - ingress
     deploy:
       replicas: 1
+      constraints:
+        - node.labels.func == master-machine
       resources:
         limits:
           cpus: "0.1"
@@ -38,10 +45,9 @@ services:
     image: partytime/api-gateway
     environment:
      - SPRING_PROFILES_ACTIVE=docker
-     - DOCKER_IP=$DOCKER_IP
+     - MASTER_IP=$MASTER_IP
     extra_hosts:
-      config-server: $DOCKER_IP
-      user-service: $DOCKER_IP
+      config-server: $MASTER_IP
     ports:
      - 8999:8999
     networks:
@@ -56,9 +62,9 @@ services:
     image: partytime/user-service
     environment:
      - SPRING_PROFILES_ACTIVE=docker
-     - DOCKER_IP=$DOCKER_IP
+     - MASTER_IP=$MASTER_IP
     extra_hosts:
-      config-server: $DOCKER_IP
+      config-server: $MASTER_IP
     ports:
      - 8899:8899
     networks:
@@ -71,3 +77,5 @@ services:
 
 networks:
   ingress:
+    #代表外部已经存在的网络
+    external: true

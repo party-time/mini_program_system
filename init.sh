@@ -43,3 +43,5 @@ docker network create --driver overlay --subnet=10.0.9.0/24 my-net
 docker swarm join \
     --token SWMTKN-1-5hjrkzo51mjjdtpup4ox84gw04a4i97f67g2j1nft58pcbvlf3-5lofhshthx92rrnh9tzgcim7e \
     192.168.1.25:2377
+
+docker node update --label-add func=master-machine <node-id>
