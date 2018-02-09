@@ -1,9 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 .idea
-config-server/config-server.iml
-eureka-server/eureka-server.iml
+*/*.iml
+*/target
 .DS_Store
-config-server/target/
-eureka-server/.DS_Store
-eureka-server/target/
