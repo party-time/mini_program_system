@@ -1,6 +1,5 @@
 version: '3'
 services:
-  MASTER_IP: 192.168.1.25
   eureka-server:
     image: partytime/eureka-server
     environment:
@@ -13,10 +12,9 @@ services:
      - ingress
     deploy:
       replicas: 1
+      placement:
       #指定部署的服务器标签
-      constraints:
-        - node.labels.func == master-machine
-
+        constraints: [node.role == manager]
 
   config-server:
     image: partytime/config-server
@@ -32,8 +30,8 @@ services:
       - ingress
     deploy:
       replicas: 1
-      constraints:
-        - node.labels.func == master-machine
+      placement:
+        constraints: [node.role == manager]
       resources:
         limits:
           cpus: "0.1"
@@ -57,6 +55,8 @@ services:
      - config-server
     deploy:
       replicas: 1
+      placement:
+        constraints: [node.role == manager]
 
   user-service:
     image: partytime/user-service
