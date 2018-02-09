@@ -28,7 +28,7 @@ services:
       - eureka-server
     networks:
       - ingress
-    command: ["./wait-for-eureka.sh"]
+    command: ["./wait-for-eureka.sh","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     deploy:
       replicas: 1
       placement:
@@ -54,7 +54,7 @@ services:
     depends_on:
      - eureka-server
      - config-server
-    command: ["./wait-for-config-server.sh"]
+    command: ["./wait-for-config-server.sh","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     deploy:
       replicas: 1
       placement:
@@ -73,7 +73,7 @@ services:
      - ingress
     deploy:
       replicas: 2
-    command: ["./wait-for-config-server.sh"]
+    command: ["./wait-for-config-server.sh","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     depends_on:
        - eureka-server
        - config-server
