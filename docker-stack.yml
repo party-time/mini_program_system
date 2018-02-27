@@ -28,7 +28,6 @@ services:
       - eureka-server
     networks:
       - ingress
-    command: ["./wait-for-eureka.sh","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     deploy:
       replicas: 1
       placement:
