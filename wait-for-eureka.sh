@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-shift
 cmd="$@"
 
 while [ -z ${EUREKA_SERVER_READY} ]; do

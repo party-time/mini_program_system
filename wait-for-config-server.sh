@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-shift
 cmd="$@"
 
 while [ -z ${CONFIG_SERVER_READY} ]; do
