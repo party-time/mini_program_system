@@ -41,5 +41,7 @@ docker-compose up -d
 # Attach to the log output of the cluster
 docker-compose
 
-docker stack deploy -c docker-stack.yml vote
+docker stack deploy -c docker-stack.yml test
+
+export MASTER_IP=192.168.1.199
 
