@@ -11,5 +11,5 @@ while [ -z ${EUREKA_SERVER_READY} ]; do
   fi
   sleep 2
 done
-
+echo "exec: $cmd"
 exec $cmd

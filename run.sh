@@ -9,7 +9,7 @@ export DOCKER_IP=$(docker-machine ip $(docker-machine active))
 docker-compose stop
 docker-compose rm -f
 
-docker images | grep none | awk '{print $3}' | xargs docker rmi
+docker images | grep none | awk '{print $3}' | xargs docker rmi -f
 
 # Start the discovery service next and wait
 docker-compose up -d eureka-server
