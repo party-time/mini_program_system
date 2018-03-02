@@ -1,0 +1,39 @@
+version: '3'
+services:
+  eureka-server:
+    image: lwdocker.com:5000/eureka-server:1.0
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+     - MASTER_IP=$MASTER_IP
+    ports:
+     - 9999:9999
+    hostname: eureka-server
+    networks:
+     - docker-lw
+    deploy:
+      replicas: 1
+      placement:
+      #指定部署的服务器标签 [node.role == manager]等等
+        constraints: [node.id == 05474cmmg6i4lf7laa9e7r1q5]
+
+  config-server:
+    image: lwdocker.com:5000/config-server:1.0
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+    ports:
+     - 9998:9998
+    hostname: config-server
+    depends_on:
+      - eureka-server
+    networks:
+      - docker-lw
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.id == 05474cmmg6i4lf7laa9e7r1q5]
+
+
+networks:
+  docker-lw:
+    #代表外部已经存在的网络
+    external: true
