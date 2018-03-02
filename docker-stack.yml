@@ -1,7 +1,7 @@
 version: '3'
 services:
   eureka-server:
-    image: lwdocker.com:5000/eureka-server
+    image: lwdocker.com:5000/eureka-server:1.0
     environment:
      - SPRING_PROFILES_ACTIVE=docker
      - MASTER_IP=$MASTER_IP
@@ -17,7 +17,7 @@ services:
         constraints: [node.id == 05474cmmg6i4lf7laa9e7r1q5]
 
   config-server:
-    image: lwdocker.com:5000/config-server
+    image: lwdocker.com:5000/config-server:1.0
     environment:
      - SPRING_PROFILES_ACTIVE=docker
     ports:
@@ -33,7 +33,7 @@ services:
         constraints: [node.id == 05474cmmg6i4lf7laa9e7r1q5]
 
   api-gateway:
-    image: lwdocker.com:5000/api-gateway
+    image: lwdocker.com:5000/api-gateway:1.0
     environment:
      - SPRING_PROFILES_ACTIVE=docker
     extra_hosts:
@@ -51,7 +51,7 @@ services:
         constraints: [node.id == 05474cmmg6i4lf7laa9e7r1q5]
 
   user-service:
-    image: lwdocker.com:5000/user-service
+    image: lwdocker.com:5000/user-service:1.0
     environment:
      - SPRING_PROFILES_ACTIVE=docker
     ports:
