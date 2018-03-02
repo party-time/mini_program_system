@@ -24,7 +24,7 @@ services:
     networks:
      - docker-lw
     deploy:
-      replicas: 3
+      replicas: 2
 
 networks:
   docker-lw:
