@@ -1,7 +1,7 @@
 version: '3'
 services:
   eureka-server:
-    image: partytime/eureka-server
+    image: lwdocker.com:5000/eureka-server
     environment:
      - SPRING_PROFILES_ACTIVE=docker
      - MASTER_IP=$MASTER_IP
@@ -9,7 +9,7 @@ services:
      - 9999:9999
     hostname: eureka-server
     networks:
-     - ingress
+     - docker-lw
     deploy:
       replicas: 1
       placement:
@@ -17,67 +17,54 @@ services:
         constraints: [node.id == 05474cmmg6i4lf7laa9e7r1q5]
 
   config-server:
-    image: partytime/config-server
+    image: lwdocker.com:5000/config-server
     environment:
      - SPRING_PROFILES_ACTIVE=docker
-     - MASTER_IP=$MASTER_IP
     ports:
      - 9998:9998
     hostname: config-server
     depends_on:
       - eureka-server
     networks:
-      - ingress
+      - docker-lw
     deploy:
       replicas: 1
       placement:
         constraints: [node.id == 05474cmmg6i4lf7laa9e7r1q5]
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 50M
-
-
 
   api-gateway:
-    image: partytime/api-gateway
+    image: lwdocker.com:5000/api-gateway
     environment:
      - SPRING_PROFILES_ACTIVE=docker
-     - MASTER_IP=$MASTER_IP
     extra_hosts:
       config-server: $MASTER_IP
     ports:
      - 8999:8999
     networks:
-     - ingress
+     - docker-lw
     depends_on:
      - eureka-server
      - config-server
-    command: ["./wait-for-config-server.sh","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     deploy:
       replicas: 1
       placement:
         constraints: [node.id == 05474cmmg6i4lf7laa9e7r1q5]
 
   user-service:
-    image: partytime/user-service
+    image: lwdocker.com:5000/user-service
     environment:
      - SPRING_PROFILES_ACTIVE=docker
-     - MASTER_IP=$MASTER_IP
-    extra_hosts:
-      config-server: $MASTER_IP
     ports:
      - 8899:8899
     networks:
-     - ingress
+     - docker-lw
     deploy:
-      replicas: 2
-    command: ["./wait-for-config-server.sh","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+      replicas: 3
     depends_on:
        - eureka-server
        - config-server
 
 networks:
-  ingress:
+  docker-lw:
     #代表外部已经存在的网络
     external: true
