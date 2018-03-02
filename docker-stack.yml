@@ -10,9 +10,6 @@ services:
      - 8999:8999
     networks:
      - docker-lw
-    depends_on:
-     - eureka-server
-     - config-server
     deploy:
       replicas: 1
       placement:
@@ -28,9 +25,6 @@ services:
      - docker-lw
     deploy:
       replicas: 3
-    depends_on:
-       - eureka-server
-       - config-server
 
 networks:
   docker-lw:
