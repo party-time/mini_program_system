@@ -35,6 +35,7 @@ public class WechatUserHandler {
     }
 
     public Mono<ServerResponse> getWechatUserByOpenId(ServerRequest request) {
+        log.info("getWechatUserByOpenId");
         return wechatUserRepository.findByOpenId(request.pathVariable("openId"))
                 .flatMap(wechatUser -> ServerResponse.ok().body(Mono.just(wechatUser),WechatUser.class))
                 .switchIfEmpty(ServerResponse.notFound().build());

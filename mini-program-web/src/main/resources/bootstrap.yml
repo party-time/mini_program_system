@@ -1,6 +1,6 @@
 spring:
   application:
-    name: api-gateway
+    name: mini-program-web
   cloud:
     config:
       discovery:
@@ -13,6 +13,9 @@ security:
     password: liuwei123
 
 eureka:
+  instance:
+    hostname: user-service
+    prefer-ip-address: true
   client:
     serviceUrl:
       defaultZone: http://${security.user.name}:${security.user.password}@192.168.1.199:9999/eureka/

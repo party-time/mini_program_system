@@ -3,8 +3,9 @@ spring:
     name: user-service
   cloud:
     config:
-      uri: http://config-server:9998
-
+      discovery:
+        enabled: true
+        service-id: config-server
 
 security:
   user:
@@ -17,4 +18,4 @@ eureka:
     prefer-ip-address: true
   client:
     serviceUrl:
-      defaultZone: http://${security.user.name}:${security.user.password}@eureka-server:9999/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@192.168.1.199:9999/eureka/

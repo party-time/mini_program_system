@@ -17,7 +17,7 @@ import java.io.InputStream;
 @Slf4j
 public class MyFallbackProvider implements FallbackProvider {
 
-    @Override
+
     public ClientHttpResponse fallbackResponse(Throwable throwable) {
         log.error("",throwable);
         if( throwable instanceof HttpHostConnectException){
@@ -32,8 +32,8 @@ public class MyFallbackProvider implements FallbackProvider {
     }
 
     @Override
-    public ClientHttpResponse fallbackResponse() {
-        return response();
+    public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
+        return null;
     }
 
 

@@ -7,7 +7,6 @@ services:
      - MASTER_IP=$MASTER_IP
     ports:
      - 9999:9999
-    hostname: eureka-server
     networks:
      - docker-lw
     deploy:
@@ -22,7 +21,6 @@ services:
      - SPRING_PROFILES_ACTIVE=docker
     ports:
      - 9998:9998
-    hostname: config-server
     depends_on:
       - eureka-server
     networks:

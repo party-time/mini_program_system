@@ -4,8 +4,6 @@ services:
     image: lwdocker.com:5000/api-gateway:1.0
     environment:
      - SPRING_PROFILES_ACTIVE=docker
-    extra_hosts:
-      config-server: $MASTER_IP
     ports:
      - 8999:8999
     networks:
